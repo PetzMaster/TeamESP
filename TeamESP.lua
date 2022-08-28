@@ -66,11 +66,12 @@ Icon.Size = UDim2.new(1, -6, 1, -6)
 Icon.ZIndex = 2
 
 local function createMarker(character)
+	local player = game:GetService("Players"):GetPlayerFromCharacter(character)
 	local Marker = Sample:Clone()
 	Marker.Parent = Holder
 	Marker.ImageColor3 = Color3.fromRGB(255,255,255)
 	Marker.RotateLabel.Arrow.ImageColor3 = Color3.fromRGB(255,255,255)
-	Marker.Icon.Image = "nil"
+	Marker.Icon.Image = game:GetService("Players"):GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
 	table.insert(Markers,{Marker,character:WaitForChild("Head")})
 end
 
@@ -189,7 +190,6 @@ game:GetService("RunService").Heartbeat:Connect(function()
 			local Burst = BurstRings:Clone()
 			if player.Team.Name ~= game:GetService("Players").LocalPlayer.Team.Name then
 				Marker.Visible = true
-				Marker.Icon.Image = game:GetService("Players"):GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
 				T:Create(Marker,TweenInfo.new(.5),{ImageColor3 = Color3.fromRGB(255,0,0)}):Play()
 				T:Create(Marker.RotateLabel.Arrow,TweenInfo.new(.5),{ImageColor3 = Color3.fromRGB(255,0,0)}):Play()
 			else

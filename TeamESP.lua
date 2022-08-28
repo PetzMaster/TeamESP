@@ -34,6 +34,7 @@ BurstRings.Image = "rbxassetid://2681945588"
 
 Sample.Name = "Sample"
 Sample.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+Sample.BackgroundTransparency = 0.5
 Sample.BackgroundTransparency = 1.000
 Sample.Position = UDim2.new(0.5, 0, 0.5, 0)
 Sample.Size = UDim2.new(0.0500000007, 0, 0.0500000007, 0)
@@ -66,13 +67,15 @@ Icon.Size = UDim2.new(1, -6, 1, -6)
 Icon.ZIndex = 2
 
 local function createMarker(character)
-	local player = game:GetService("Players"):GetPlayerFromCharacter(character)
-	local Marker = Sample:Clone()
-	Marker.Parent = Holder
-	Marker.ImageColor3 = Color3.fromRGB(255,255,255)
-	Marker.RotateLabel.Arrow.ImageColor3 = Color3.fromRGB(255,255,255)
-	Marker.Icon.Image = game:GetService("Players"):GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
-	table.insert(Markers,{Marker,character:WaitForChild("Head")})
+	if character.Name ~= game:GetService("Players").LocalPlayer.Name then
+		local player = game:GetService("Players"):GetPlayerFromCharacter(character)
+		local Marker = Sample:Clone()
+		Marker.Parent = Holder
+		Marker.ImageColor3 = Color3.fromRGB(255,255,255)
+		Marker.RotateLabel.Arrow.ImageColor3 = Color3.fromRGB(255,255,255)
+		Marker.Icon.Image = game:GetService("Players"):GetUserThumbnailAsync(player.UserId, Enum.ThumbnailType.HeadShot, Enum.ThumbnailSize.Size420x420)
+		table.insert(Markers,{Marker,character:WaitForChild("Head")})
+	end
 end
 
 function ClampMarkerToBorder(X,Y,Absolute)
@@ -103,7 +106,7 @@ for _, player in pairs(game:GetService("Players"):GetChildren()) do
 	createMarker(player.Character)
 	highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 	highlight.OutlineTransparency = 1 
-	highlight.FillTransparency = 0.6
+	highlight.FillTransparency = 0.2
 	if player.Team.Name ~= game:GetService("Players").LocalPlayer.Team.Name then
 		highlight.FillColor = Color3.fromRGB(255,0,0)
 	else
@@ -113,7 +116,7 @@ for _, player in pairs(game:GetService("Players"):GetChildren()) do
 		while true do
 			highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 			highlight.OutlineTransparency = 1 
-			highlight.FillTransparency = 0.6
+			highlight.FillTransparency = 0.2
 			if player.Team.Name ~= game:GetService("Players").LocalPlayer.Team.Name then
 				highlight.FillColor = Color3.fromRGB(255,0,0)
 			else
@@ -132,7 +135,7 @@ game:GetService("Players").PlayerAdded:Connect(function(player)
 		highlight = Instance.new("Highlight", player.Character)
 		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 		highlight.OutlineTransparency = 1 
-		highlight.FillTransparency = 0.6
+		highlight.FillTransparency = 0.2
 		if player.Team.Name ~= game:GetService("Players").LocalPlayer.Team.Name then
 			highlight.FillColor = Color3.fromRGB(255,0,0)
 		else
@@ -142,7 +145,7 @@ game:GetService("Players").PlayerAdded:Connect(function(player)
 	while true do
 		highlight.DepthMode = Enum.HighlightDepthMode.AlwaysOnTop
 		highlight.OutlineTransparency = 1 
-		highlight.FillTransparency = 0.6
+		highlight.FillTransparency = 0.2
 		if player.Team.Name ~= game:GetService("Players").LocalPlayer.Team.Name then
 			highlight.FillColor = Color3.fromRGB(255,0,0)
 		else
